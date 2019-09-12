@@ -1,0 +1,15 @@
+{
+  "name": "bonny-doon-weather-history",
+  "version": "1.0.0",
+  "description": "Weather history in Healds",
+  "main": "injest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jim",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "superagent": "^5.1.0"
+  }
+}
