@@ -3,8 +3,8 @@ const moment = require('moment');
 const request = require('superagent');
 
 const API_KEY = process.env.DARKSKY;
-const firstDate = moment('1944-01-01T09:00:00Z');
-const lastDate = moment('1944-01-04T09:00:00Z');
+const firstDate = moment('1944-01-01 09:00');
+const lastDate = moment('1944-01-04 09:00');
 const momentFormat = 'YYYY-MM-DD[T]HH:mm[Z]';
 const excludeParam = '?exclude=currently,minutely,hourly,flags';
 const bonnyDoonCoords = '38.587384,-122.881365';
@@ -19,9 +19,17 @@ const interval = setInterval(() => {
 	if (dateCursor.isSame(lastDate, 'day')) {
 		clearInterval(interval);
 	}
-}, 1000);
+}, 2000);
+
+const latestFile = `data/${firstDate.format(momentFormat)}.json`;
+console.log('latestFile', latestFile);
+let rawdata = fs.readFileSync(latestFile);
+console.log(JSON.parse(rawdata));
 
 function fetchDay(date) {
+
+
+
 	const url = `${host}/${path}/${API_KEY}/${bonnyDoonCoords},${encodeURIComponent(dateCursor.format(momentFormat))}${excludeParam}`;
 	console.log('fetchDay', date);
 }
