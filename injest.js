@@ -2,7 +2,7 @@ const fs = require('fs');
 const moment = require('moment');
 const request = require('superagent');
 
-const INTERVAL = 5000;
+const INTERVAL = 1000 * 60 * 2; // 2 minutes
 
 const API_KEY = process.env.DARKSKY;
 const dateCursor = moment('1944-01-02 09:00');
