@@ -2,48 +2,67 @@ const fs = require('fs');
 const moment = require('moment');
 const request = require('superagent');
 
+const INTERVAL = 5000;
+
 const API_KEY = process.env.DARKSKY;
-const firstDate = moment('1944-01-01 09:00');
-const lastDate = moment('1944-01-04 09:00');
-const momentFormat = 'YYYY-MM-DD[T]HH:mm[Z]';
+const dateCursor = moment('1944-01-02 09:00');
+const lastDate = moment('1944-01-05 09:00');
+const keyFormat = 'YYYY-MM-DD[T]HH:mm[:00][Z]';
+const displayFormat = 'YYYY-MM-DD';
 const excludeParam = '?exclude=currently,minutely,hourly,flags';
 const bonnyDoonCoords = '38.587384,-122.881365';
 const host = 'https://api.darksky.net';
 const path = 'forecast';
 
-let dateCursor = firstDate;
+// Fetch one instantly
+fetchDay(dateCursor);
 
-const interval = setInterval(() => {
-	fetchDay(dateCursor);
-	dateCursor.add(1, 'day');
-	if (dateCursor.isSame(lastDate, 'day')) {
-		clearInterval(interval);
-	}
-}, 2000);
-
-const latestFile = `data/${firstDate.format(momentFormat)}.json`;
-console.log('latestFile', latestFile);
-let rawdata = fs.readFileSync(latestFile);
-console.log(JSON.parse(rawdata));
-
+/**
+ * Fetch a day's worth of weather and append it to a fresh file
+ * @param  {moment} date Date to fetchDay
+ * @return {void}
+ */
 function fetchDay(date) {
 
+	console.log('----------------');
 
+	const now = date.clone();
 
-	const url = `${host}/${path}/${API_KEY}/${bonnyDoonCoords},${encodeURIComponent(dateCursor.format(momentFormat))}${excludeParam}`;
-	console.log('fetchDay', date);
+	const latestDate = now.clone().subtract(1, 'day');
+	process.stdout.write(`Reading ${latestDate.format(displayFormat)} existing file... `);
+	const latestFileName = `data/${latestDate.format(keyFormat)}.json`;
+	const latestFileContent = fs.readFileSync(latestFileName);
+	const latestData = JSON.parse(latestFileContent);
+	console.log('OK!');
+
+	const url = `${host}/${path}/${API_KEY}/${bonnyDoonCoords},${encodeURIComponent(now.format(keyFormat))}${excludeParam}`;
+
+	process.stdout.write(`Fetching ${now.format(displayFormat)} data... `);
+
+	request.get(url).then(res => {
+
+		console.log('OK!');
+
+		latestData[now.format(keyFormat)] = res.body.daily.data[0];
+
+		process.stdout.write(`Writing ${now.format(displayFormat)} data to new file... `);
+		// write to a new file named 2pac.txt
+		fs.writeFile(`data/${now.format(keyFormat)}.json`, JSON.stringify(latestData), (err) => {
+			console.log('OK!');
+
+			const nextDay = now.add(1, 'day');
+
+			if (!nextDay.isSame(lastDate)) {
+				console.log(`Moving to ${nextDay.format(displayFormat)} in ${INTERVAL}ms...`);
+				setTimeout(() => {
+					fetchDay(nextDay);
+				}, INTERVAL);
+			} else {
+				console.log('DONE');
+			}
+
+		});
+
+	});
+
 }
-
-// request
-// 	.get(url)
-// 	.then(res => {
-//
-// 		const newDayData = {};
-// 		newDayData[firstDate] = res.body.daily.data[0];
-//
-// 		// write to a new file named 2pac.txt
-// 		fs.writeFile(`data/${firstDate}.json`, JSON.stringify(newDayData), (err) => {
-// 			console.log('write_success');
-// 		});
-//
-// 	});
