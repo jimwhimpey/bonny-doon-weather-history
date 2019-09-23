@@ -2,11 +2,12 @@ const fs = require('fs');
 const moment = require('moment');
 const request = require('superagent');
 
-const INTERVAL = 1000 * 60 * 2; // 2 minutes
+const INTERVAL = 1000; // 1 seconds
 
 const API_KEY = process.env.DARKSKY;
-const dateCursor = moment('1944-01-02 09:00');
-const lastDate = moment('1944-01-05 09:00');
+// const dateCursor = moment('1944-01-02 09:00');
+const dateCursor = moment('1946-03-17 09:00');
+const lastDate = moment('2019-09-21 09:00');
 const keyFormat = 'YYYY-MM-DD[T]HH:mm[:00][Z]';
 const displayFormat = 'YYYY-MM-DD';
 const excludeParam = '?exclude=currently,minutely,hourly,flags';
@@ -43,7 +44,11 @@ function fetchDay(date) {
 
 		console.log('OK!');
 
-		latestData[now.format(keyFormat)] = res.body.daily.data[0];
+		if (res.body && res.body.daily) {
+			latestData[now.format(keyFormat)] = res.body.daily.data[0];
+		} else {
+			latestData[now.format(keyFormat)] = {};
+		}
 
 		process.stdout.write(`Writing ${now.format(displayFormat)} data to new file... `);
 		// write to a new file named 2pac.txt
