@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const moment = require('moment');
 const hbs = require( 'express-handlebars');
 const bodyParser = require('body-parser');
@@ -26,9 +27,21 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(lessMiddleware(__dirname + '/public'));
 app.use(express.static(__dirname + '/public'));
 
+const dataRaw = fs.readFileSync('./history/averages.json');
+data = JSON.parse(dataRaw);
+
 app.get('/', (req, res) => {
 
-	res.render('home', {});
+	const dayKeys = Object.keys(data);
+	const days = dayKeys.map((dayKey) => {
+		return {
+			day: dayKey,
+			keys: Object.keys(data[dayKey]),
+			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
+		};
+	});
+
+	res.render('home', { days });
 
 });
 
