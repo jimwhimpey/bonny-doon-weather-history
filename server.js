@@ -32,17 +32,34 @@ data = JSON.parse(dataRaw);
 
 app.get('/', (req, res) => {
 
+	const splitInMonths = [];
+
 	const dayKeys = Object.keys(data);
 	const days = dayKeys.map((dayKey) => {
 		return {
-			day: dayKey,
+			date: dayKey,
+			day: parseInt(dayKey.split('-')[1], 10),
+			month: parseInt(dayKey.split('-')[0]),
 			keys: Object.keys(data[dayKey]),
 			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
 		};
+	}).forEach((weatherOb) => {
+		const month = splitInMonths[weatherOb.month];
+		if (!month) {
+			splitInMonths[weatherOb.month] = [];
+		}
+		splitInMonths[weatherOb.month][weatherOb.month.day] = weatherOb;
 	});
 
-	res.render('home', { days });
+	console.log('splitInMonths', splitInMonths);
+
+	res.render('home', {
+		days,
+		months: splitInMonths,
+		fields: Object.keys(splitInMonths[1][1]),
+	});
 
 });
 
 app.listen(3000, () => console.log(`Listening on port ${3000}!`))
+;

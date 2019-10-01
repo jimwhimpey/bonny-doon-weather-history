@@ -1,5 +1,18 @@
-<table>
-	{{#each days}}
+{{#each months}}
+
+	<h1>{{@index}}</h1>
+
+	<table>
+		<tr>
+			{{#each fields}}
+				<th>{{this}}</th>
+			{{/each}}
+		</tr>
+	</table>
+
+{{/each}}
+
+	<!-- {{#each days}}
 		<tr>
 			<td>{{day}}</td>
 		</tr>
@@ -13,5 +26,5 @@
 				<td>{{this}}</td>
 			{{/each}}
 		</tr>
-	{{/each}}
+	{{/each}} -->
 </table>
