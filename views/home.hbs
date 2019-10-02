@@ -1,13 +1,24 @@
 {{#each months}}
 
-	<h1>{{@index}}</h1>
+	<h1>{{momentFormat this.date "MMM"}}</h1>
 
 	<table>
 		<tr>
-			{{#each fields}}
+			<th>&nbsp;</th>
+			{{#each ../fields}}
 				<th>{{this}}</th>
 			{{/each}}
 		</tr>
+
+		{{#each this.days}}
+			<tr>
+				<td>{{momentFormat this.dateMoment "Do"}}</td>
+				{{#each this.values}}
+					<td>{{this}}</td>
+				{{/each}}
+			</tr>
+		{{/each}}
+
 	</table>
 
 {{/each}}

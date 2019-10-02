@@ -16,7 +16,14 @@ app.engine( 'hbs', hbs({
 	defaultLayout: 'default',
 	layoutsDir: __dirname + '/views/layouts/',
 	partialsDir: __dirname + '/views/partials/',
-	helpers: {}
+	helpers: {
+		percentage: function (input) {
+			return (input * 100).toFixed(2);
+		},
+		momentFormat: function (input, format) {
+			return moment(input).format(format);
+		}
+	}
 }));
 
 /**
@@ -32,31 +39,38 @@ data = JSON.parse(dataRaw);
 
 app.get('/', (req, res) => {
 
-	const splitInMonths = [];
-
 	const dayKeys = Object.keys(data);
+
+	// One per day
 	const days = dayKeys.map((dayKey) => {
 		return {
 			date: dayKey,
 			day: parseInt(dayKey.split('-')[1], 10),
 			month: parseInt(dayKey.split('-')[0]),
+			dateMoment: moment(dayKey, "M-D"),
 			keys: Object.keys(data[dayKey]),
 			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
 		};
-	}).forEach((weatherOb) => {
-		const month = splitInMonths[weatherOb.month];
-		if (!month) {
-			splitInMonths[weatherOb.month] = [];
-		}
-		splitInMonths[weatherOb.month][weatherOb.month.day] = weatherOb;
 	});
 
-	console.log('splitInMonths', splitInMonths);
+	// Then split it into an array of months and then
+	// days within those months.
+	const splitInMonths = [];
+	days.forEach((weatherOb) => {
+		const month = splitInMonths[weatherOb.month-1];
+		if (!month) splitInMonths[weatherOb.month-1] = {
+			date: moment(`${weatherOb.month}-1`, "M-D"),
+			days: [],
+		};
+		splitInMonths[weatherOb.month-1].days[weatherOb.day-1] = weatherOb;
+	});
+
+	console.log('days[0].keys', days[0].keys);
 
 	res.render('home', {
-		days,
+		days: days,
 		months: splitInMonths,
-		fields: Object.keys(splitInMonths[1][1]),
+		fields: days[0].keys,
 	});
 
 });
