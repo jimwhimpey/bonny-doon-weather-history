@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const fs = require('fs');
 const moment = require('moment');
@@ -43,6 +44,7 @@ app.get('/', (req, res) => {
 
 	// One per day
 	const days = dayKeys.map((dayKey) => {
+
 		return {
 			date: dayKey,
 			day: parseInt(dayKey.split('-')[1], 10),
@@ -51,6 +53,7 @@ app.get('/', (req, res) => {
 			keys: Object.keys(data[dayKey]),
 			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
 		};
+
 	});
 
 	// Then split it into an array of months and then

@@ -12,7 +12,7 @@ daysOfYear.forEach((dayOfYear) => {
 
 	const years = Object.keys(dayData);
 
-	const fields = ['apparentTemperature', 'apparentTemperatureHigh', 'apparentTemperatureHighTime', 'apparentTemperatureLow', 'apparentTemperatureLowTime', 'apparentTemperatureMax', 'apparentTemperatureMaxTime', 'apparentTemperatureMin', 'apparentTemperatureMinTime', 'cloudCover', 'dewPoint', 'humidity', 'moonPhase', 'nearestStormBearing', 'nearestStormDistance', 'ozone', 'precipAccumulation', 'precipIntensity', 'precipIntensityError', 'precipIntensityMax', 'precipIntensityMaxTime', 'precipProbability', 'pressure', 'sunriseTime', 'sunsetTime'];
+	const fields = ['apparentTemperature', 'apparentTemperatureHigh', 'apparentTemperatureHighTime', 'apparentTemperatureLow', 'apparentTemperatureLowTime', 'apparentTemperatureMax', 'apparentTemperatureMaxTime', 'apparentTemperatureMin', 'apparentTemperatureMinTime', 'cloudCover', 'dewPoint', 'humidity', 'moonPhase', 'nearestStormBearing', 'nearestStormDistance', 'ozone', 'precipAccumulation', 'precipIntensity', 'precipIntensityError', 'precipIntensityMax', 'precipIntensityMaxTime', 'precipProbability', 'pressure'];
 
 	const totals = {};
 
