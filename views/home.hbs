@@ -25,15 +25,15 @@
 		{{#each this.days}}
 			<tr>
 				<td>{{momentFormat this.dateMoment "Do"}}</td>
-				<td>{{this.data.apparentTemperatureLow}}</td>
-				<td>{{this.data.apparentTemperatureHigh}}</td>
-				<td>{{this.data.precipProbability}}</td>
-				<td>{{this.data.precipIntensity}}</td>
-				<td>{{this.data.precipIntensityMax}}</td>
-				<td>{{this.data.humidity}}</td>
-				<td>{{this.data.cloudCover}}</td>
-				<td>{{this.data.dewPoint}}</td>
-				<td>{{this.data.pressure}}</td>
+				<td>{{temperatureF this.data.apparentTemperatureLow}}</td>
+				<td>{{temperatureF this.data.apparentTemperatureHigh}}</td>
+				<td>{{percentage this.data.precipProbability}}</td>
+				<td>{{intensity this.data.precipIntensity}}</td>
+				<td>{{intensity this.data.precipIntensityMax}}</td>
+				<td>{{percentage this.data.humidity}}</td>
+				<td>{{percentage this.data.cloudCover}}</td>
+				<td>{{temperatureF this.data.dewPoint}}</td>
+				<td>{{pressure this.data.pressure}}</td>
 				<td>{{this.data.ozone}}</td>
 			</tr>
 		{{/each}}

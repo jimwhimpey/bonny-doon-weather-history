@@ -18,7 +18,16 @@ app.engine( 'hbs', hbs({
 	partialsDir: __dirname + '/views/partials/',
 	helpers: {
 		percentage: function (input) {
-			return (input * 100).toFixed(2);
+			return `${(input * 100).toFixed(2)}%`;
+		},
+		temperatureF: (input) => {
+			return `${input.toFixed(2)}℉`;
+		},
+		intensity: (input) => {
+			return `${input.toFixed(3)}mm/h`;
+		},
+		pressure: (input) => {
+			return `${Math.round(input)}hPa`;
 		},
 		momentFormat: function (input, format) {
 			return moment(input).format(format);
