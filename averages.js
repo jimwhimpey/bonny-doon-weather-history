@@ -23,7 +23,6 @@ daysOfYear.forEach((dayOfYear) => {
 		yearFields.forEach((yearField) => {
 			if (fields.indexOf(yearField) < 0) return;
 			const yearDayDataValue = yearData[yearField];
-			if (!yearDayDataValue) return;
 			// console.log('yearField', yearField);
 			if (!totals[yearField]) {
 				totals[yearField] = [yearDayDataValue];
