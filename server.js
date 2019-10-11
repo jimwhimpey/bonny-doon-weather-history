@@ -48,6 +48,7 @@ app.get('/', (req, res) => {
 			day: parseInt(dayKey.split('-')[1], 10),
 			month: parseInt(dayKey.split('-')[0]),
 			dateMoment: moment(dayKey, "M-D"),
+			data: data[dayKey],
 			keys: Object.keys(data[dayKey]),
 			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
 		};
@@ -70,7 +71,8 @@ app.get('/', (req, res) => {
 	res.render('home', {
 		days: days,
 		months: splitInMonths,
-		fields: days[0].keys,
+		daysJson: JSON.stringify(days),
+		monthsJson: JSON.stringify(splitInMonths),
 	});
 
 });
