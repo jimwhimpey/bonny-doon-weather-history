@@ -12,7 +12,7 @@ daysOfYear.forEach((dayOfYear) => {
 
 	const years = Object.keys(dayData);
 
-	const fields = ['apparentTemperature', 'apparentTemperatureHigh', 'apparentTemperatureHighTime', 'apparentTemperatureLow', 'apparentTemperatureLowTime', 'apparentTemperatureMax', 'apparentTemperatureMaxTime', 'apparentTemperatureMin', 'apparentTemperatureMinTime', 'cloudCover', 'dewPoint', 'humidity', 'moonPhase', 'nearestStormBearing', 'nearestStormDistance', 'ozone', 'precipAccumulation', 'precipIntensity', 'precipIntensityError', 'precipIntensityMax', 'precipIntensityMaxTime', 'precipProbability', 'pressure'];
+	const fields = ['apparentTemperature', 'apparentTemperatureHigh', 'apparentTemperatureLow', 'apparentTemperatureMax', 'apparentTemperatureMin', 'cloudCover', 'dewPoint', 'humidity', 'nearestStormBearing', 'nearestStormDistance', 'ozone', 'precipAccumulation', 'precipIntensity', 'precipIntensityError', 'precipIntensityMax', 'precipProbability', 'pressure'];
 
 	const totals = {};
 
@@ -23,8 +23,8 @@ daysOfYear.forEach((dayOfYear) => {
 		yearFields.forEach((yearField) => {
 			if (fields.indexOf(yearField) < 0) return;
 			const yearDayDataValue = yearData[yearField];
-			if (!yearDayDataValue) return;
-			// console.log('yearField', yearField);
+			// Exclude the zeroes on these
+			if (['precipIntensity', 'precipIntensityMax'].indexOf(yearField) > -1 && !yearDayDataValue) return;
 			if (!totals[yearField]) {
 				totals[yearField] = [yearDayDataValue];
 			} else {

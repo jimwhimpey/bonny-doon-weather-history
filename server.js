@@ -19,7 +19,16 @@ app.engine( 'hbs', hbs({
 	partialsDir: __dirname + '/views/partials/',
 	helpers: {
 		percentage: function (input) {
-			return (input * 100).toFixed(2);
+			return `${(input * 100).toFixed(2)}%`;
+		},
+		temperatureF: (input) => {
+			return `${input.toFixed(2)}℉`;
+		},
+		intensity: (input) => {
+			return input ? `${input.toFixed(3)}mm/h` : 0;
+		},
+		pressure: (input) => {
+			return `${Math.round(input)}hPa`;
 		},
 		momentFormat: function (input, format) {
 			return moment(input).format(format);
@@ -50,6 +59,7 @@ app.get('/', (req, res) => {
 			day: parseInt(dayKey.split('-')[1], 10),
 			month: parseInt(dayKey.split('-')[0]),
 			dateMoment: moment(dayKey, "M-D"),
+			data: data[dayKey],
 			keys: Object.keys(data[dayKey]),
 			values: Object.keys(data[dayKey]).map(key => data[dayKey][key])
 		};
@@ -73,7 +83,8 @@ app.get('/', (req, res) => {
 	res.render('home', {
 		days: days,
 		months: splitInMonths,
-		fields: days[0].keys,
+		daysJson: JSON.stringify(days),
+		monthsJson: JSON.stringify(splitInMonths),
 	});
 
 });

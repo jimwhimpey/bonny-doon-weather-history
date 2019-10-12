@@ -1,3 +1,8 @@
+<script type="text/javascript">
+	console.log('days', {{{daysJson}}});
+	console.log('months', {{{monthsJson}}});
+</script>
+
 {{#each months}}
 
 	<h1>{{momentFormat this.date "MMM"}}</h1>
@@ -5,37 +10,34 @@
 	<table>
 		<tr>
 			<th>&nbsp;</th>
-			{{#each ../fields}}
-				<th>{{this}}</th>
-			{{/each}}
+			<th>Low</th>
+			<th>High</th>
+			<th>Rain Probability</th>
+			<th>Rain Intensity</th>
+			<th>Rain Intensity Max</th>
+			<th>Humidity</th>
+			<th>Clouds</th>
+			<th>Dew</th>
+			<th>Pressure</th>
+			<th>Ozone</th>
 		</tr>
 
 		{{#each this.days}}
 			<tr>
 				<td>{{momentFormat this.dateMoment "Do"}}</td>
-				{{#each this.values}}
-					<td>{{this}}</td>
-				{{/each}}
+				<td>{{temperatureF this.data.apparentTemperatureLow}}</td>
+				<td>{{temperatureF this.data.apparentTemperatureHigh}}</td>
+				<td>{{percentage this.data.precipProbability}}</td>
+				<td>{{intensity this.data.precipIntensity}}</td>
+				<td>{{intensity this.data.precipIntensityMax}}</td>
+				<td>{{percentage this.data.humidity}}</td>
+				<td>{{percentage this.data.cloudCover}}</td>
+				<td>{{temperatureF this.data.dewPoint}}</td>
+				<td>{{pressure this.data.pressure}}</td>
+				<td>{{this.data.ozone}}</td>
 			</tr>
 		{{/each}}
 
 	</table>
 
 {{/each}}
-
-	<!-- {{#each days}}
-		<tr>
-			<td>{{day}}</td>
-		</tr>
-		<tr>
-			{{#each keys}}
-				<td>{{this}}</td>
-			{{/each}}
-		</tr>
-		<tr>
-			{{#each values}}
-				<td>{{this}}</td>
-			{{/each}}
-		</tr>
-	{{/each}} -->
-</table>
