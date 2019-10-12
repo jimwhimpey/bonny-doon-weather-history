@@ -24,7 +24,7 @@ app.engine( 'hbs', hbs({
 			return `${input.toFixed(2)}℉`;
 		},
 		intensity: (input) => {
-			return `${input.toFixed(3)}mm/h`;
+			return input ? `${input.toFixed(3)}mm/h` : 0;
 		},
 		pressure: (input) => {
 			return `${Math.round(input)}hPa`;

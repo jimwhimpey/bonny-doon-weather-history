@@ -23,7 +23,8 @@ daysOfYear.forEach((dayOfYear) => {
 		yearFields.forEach((yearField) => {
 			if (fields.indexOf(yearField) < 0) return;
 			const yearDayDataValue = yearData[yearField];
-			// console.log('yearField', yearField);
+			// Exclude the zeroes on these
+			if (['precipIntensity', 'precipIntensityMax'].indexOf(yearField) > -1 && !yearDayDataValue) return;
 			if (!totals[yearField]) {
 				totals[yearField] = [yearDayDataValue];
 			} else {
