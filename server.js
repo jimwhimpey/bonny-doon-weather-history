@@ -19,19 +19,22 @@ app.engine( 'hbs', hbs({
 	partialsDir: __dirname + '/views/partials/',
 	helpers: {
 		percentage: function (input) {
-			return `${(input * 100).toFixed(2)}%`;
+			return `${Math.round(input * 100)}%`;
 		},
 		temperatureF: (input) => {
-			return `${input.toFixed(2)}℉`;
+			return `${Math.round(input)}℉`;
 		},
 		intensity: (input) => {
-			return input ? `${input.toFixed(3)}mm/h` : 0;
+			return input ? `${input.toFixed(2).substr(1)}mm/h` : 0;
 		},
 		pressure: (input) => {
 			return `${Math.round(input)}hPa`;
 		},
 		momentFormat: function (input, format) {
 			return moment(input).format(format);
+		},
+		ozone: function (input, format) {
+			return moment(Math.round(input));
 		}
 	}
 }));
@@ -77,8 +80,6 @@ app.get('/', (req, res) => {
 		};
 		splitInMonths[weatherOb.month-1].days[weatherOb.day-1] = weatherOb;
 	});
-
-	console.log('days[0].keys', days[0].keys);
 
 	res.render('home', {
 		days: days,

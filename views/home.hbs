@@ -7,34 +7,34 @@
 
 	<h1>{{momentFormat this.date "MMMM"}}</h1>
 
-	<table>
+	<table cellspacing="0" cellpadding="0">
 		<tr>
-			<th>&nbsp;</th>
-			<th>Low</th>
-			<th>High</th>
-			<th>Rain Probability</th>
-			<th>Rain Intensity</th>
-			<th>Rain Intensity Max</th>
-			<th>Humidity</th>
-			<th>Clouds</th>
-			<th>Dew</th>
-			<th>Pressure</th>
-			<th>Ozone</th>
+			<th class="date">&nbsp;</th>
+			<th class="temp-low">Low</th>
+			<th class="temp-high">High</th>
+			<th class="rain-prob">💧Prob.</th>
+			<th class="rain-int">💧Int.</th>
+			<th class="rain-int-max">💧Int. Max.</th>
+			<th class="humidity">Humidity</th>
+			<th class="clouds">Clouds</th>
+			<th class="dew">Dew</th>
+			<th class="pressure">Pressure</th>
+			<th class="ozone">Ozone</th>
 		</tr>
 
 		{{#each this.days}}
 			<tr>
-				<td>{{momentFormat this.dateMoment "Do"}}</td>
-				<td>{{temperatureF this.data.apparentTemperatureLow}}</td>
-				<td>{{temperatureF this.data.apparentTemperatureHigh}}</td>
-				<td>{{percentage this.data.precipProbability}}</td>
-				<td>{{intensity this.data.precipIntensity}}</td>
-				<td>{{intensity this.data.precipIntensityMax}}</td>
-				<td>{{percentage this.data.humidity}}</td>
-				<td>{{percentage this.data.cloudCover}}</td>
-				<td>{{temperatureF this.data.dewPoint}}</td>
-				<td>{{pressure this.data.pressure}}</td>
-				<td>{{this.data.ozone}}</td>
+				<td class="date">{{momentFormat this.dateMoment "Do"}}</td>
+				<td class="temp-low">{{temperatureF this.data.apparentTemperatureLow}}</td>
+				<td class="temp-high">{{temperatureF this.data.apparentTemperatureHigh}}</td>
+				<td class="rain-prob">{{percentage this.data.precipProbability}}</td>
+				<td class="rain-int">{{intensity this.data.precipIntensity}}</td>
+				<td class="rain-int-max">{{intensity this.data.precipIntensityMax}}</td>
+				<td class="humidity">{{percentage this.data.humidity}}</td>
+				<td class="clouds">{{percentage this.data.cloudCover}}</td>
+				<td class="dew">{{temperatureF this.data.dewPoint}}</td>
+				<td class="pressure">{{pressure this.data.pressure}}</td>
+				<td class="ozone">{{ozone this.data.ozone}}</td>
 			</tr>
 		{{/each}}
 
