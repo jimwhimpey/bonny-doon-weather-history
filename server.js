@@ -5,7 +5,10 @@ const moment = require('moment');
 const hbs = require( 'express-handlebars');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
+const chroma = require('chroma-js');
 const app = express();
+
+const colorScale = chroma.scale(['#256cba', '#256cba','d32529']).mode('lch').colors(70);
 
 /**
  * Handlebars support
@@ -22,7 +25,7 @@ app.engine( 'hbs', hbs({
 			return `${Math.round(input * 100)}%`;
 		},
 		temperatureF: (input) => {
-			return `${Math.round(input)}℉`;
+			return `<span style="color: ${colorScale[Math.round(input)]}">${Math.round(input)}℉</span>`;
 		},
 		intensity: (input) => {
 			return input ? `${input.toFixed(2).substr(1)}mm/h` : 0;

@@ -25,8 +25,8 @@
 		{{#each this.days}}
 			<tr>
 				<td class="date">{{momentFormat this.dateMoment "Do"}}</td>
-				<td class="temp-low">{{temperatureF this.data.apparentTemperatureLow}}</td>
-				<td class="temp-high">{{temperatureF this.data.apparentTemperatureHigh}}</td>
+				<td class="temp-low">{{{temperatureF this.data.apparentTemperatureLow}}}</td>
+				<td class="temp-high">{{{temperatureF this.data.apparentTemperatureHigh}}}</td>
 				<td class="rain-prob">{{percentage this.data.precipProbability}}</td>
 				<td class="rain-int">{{intensity this.data.precipIntensity}}</td>
 				<td class="rain-int-max">{{intensity this.data.precipIntensityMax}}</td>
